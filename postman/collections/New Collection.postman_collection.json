@@ -1,0 +1,346 @@
+{
+  "info": {
+    "_postman_id": "a898d8d9-c078-4e48-89fa-9902ff13ab56",
+    "name": "Actowiz",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Submit bug proof",
+      "id": "c7d98c53-ebc4-422a-816d-3434694badc4",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OThjMjZjMzk5ZDdmZWUzYWQ4MWIxNzQiLCJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzA4Mzg5MzIsImV4cCI6MTc3MDkyNTMzMn0.CK_de57gX06tGv70bdJRezz7Fpu-2lRD0XG_uTvcnwE",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "description",
+              "value": "This is a test",
+              "type": "text",
+              "uuid": "88aa5bc4-7bda-47ea-959c-900dee3cb0c6"
+            },
+            {
+              "key": "bugId",
+              "value": "698cdb686f619d21821361ec",
+              "type": "text",
+              "uuid": "0a2b1617-dc92-480d-89de-c5e7170cb45e"
+            },
+            {
+              "key": "proof",
+              "type": "file",
+              "uuid": "bc72ee4b-4d89-412a-99a5-f24adc028f54",
+              "src": []
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/users/submit-bug-fix",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "users",
+            "submit-bug-fix"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Users bug get",
+      "id": "026eec51-adb9-4b78-9fdc-405dc3119062",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OThjMjZjMzk5ZDdmZWUzYWQ4MWIxNzQiLCJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzA4Mzg5MzIsImV4cCI6MTc3MDkyNTMzMn0.CK_de57gX06tGv70bdJRezz7Fpu-2lRD0XG_uTvcnwE",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/users/bugs",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "users",
+            "bugs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User balance fetch",
+      "id": "53459f9b-7645-4098-b3da-54a6d684a5bd",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OThjMjZjMzk5ZDdmZWUzYWQ4MWIxNzQiLCJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzA4Mzg5MzIsImV4cCI6MTc3MDkyNTMzMn0.CK_de57gX06tGv70bdJRezz7Fpu-2lRD0XG_uTvcnwE",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/users/balance",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "users",
+            "balance"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create bug",
+      "id": "7afe49db-f65e-47aa-8178-85c66637f05d",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OThjMTk5MWY1MmRjNjNmMTRlYmI3NTkiLCJlbWFpbCI6Im5lZWxAZ21haWwuY29tIiwicm9sZSI6ImJ1Zy1jcmVhdG9yIiwiaWF0IjoxNzcwODM4NDczLCJleHAiOjE3NzA5MjQ4NzN9.3ApvmLdYybe8SYgCPQbvAJSE6TOVSJHjWY_6dcvXIlU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"bountyAmount\": 230,\r\n  \"description\": \"description\",\r\n  \"isConfigurable\": false,\r\n  \"title\": \"title 123\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/bugs",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "bugs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Bug approved status update",
+      "id": "a52a5aa9-d130-4cfe-a6c2-10b4e26d4a71",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OThjMTk5MWY1MmRjNjNmMTRlYmI3NTkiLCJlbWFpbCI6Im5lZWxAZ21haWwuY29tIiwicm9sZSI6ImJ1Zy1jcmVhdG9yIiwiaWF0IjoxNzcwODM4NDczLCJleHAiOjE3NzA5MjQ4NzN9.3ApvmLdYybe8SYgCPQbvAJSE6TOVSJHjWY_6dcvXIlU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"status\" : \"Approved\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/bugs/submissions/698cd405147d657f0e974103/status",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "bugs",
+            "submissions",
+            "698cd405147d657f0e974103",
+            "status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Bug creator bug get",
+      "id": "5710ef45-fe05-40c2-9480-b4534ae3d9db",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OThjMTk5MWY1MmRjNjNmMTRlYmI3NTkiLCJlbWFpbCI6Im5lZWxAZ21haWwuY29tIiwicm9sZSI6ImJ1Zy1jcmVhdG9yIiwiaWF0IjoxNzcwODM4NDczLCJleHAiOjE3NzA5MjQ4NzN9.3ApvmLdYybe8SYgCPQbvAJSE6TOVSJHjWY_6dcvXIlU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/bugs",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "bugs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Register",
+      "id": "654f99cb-a5a8-4fdf-99ae-c29ca087e5de",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"neel1@gmail.com\",\r\n  \"name\": \"neel patel\",\r\n  \"password\": \"123456\",\r\n  \"role\": \"user\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "id": "235cbcde-271b-4de1-ab4b-12c84259d2a5",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\": \"neel@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
