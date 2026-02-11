@@ -65,7 +65,6 @@ const validateCreateBug = (req, res, next) => {
     });
   }
 
-  // Replace req.body with validated and sanitized data
   req.body = value;
   next();
 };

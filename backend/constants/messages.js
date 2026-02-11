@@ -10,6 +10,12 @@ const MESSAGES = {
   BUG_STATUS_INVALID: 'Invalid bug status',
   BUG_CREATED_SUCCESSFULLY: 'Bug created successfully',
   BUG_CREATION_FAILED: 'Failed to create bug',
+  ACCESS_TOKEN_REQUIRED: 'Access token required',
+  INVALID_TOKEN: 'Invalid or expired token',
+  FORBIDDEN: 'Access forbidden',
+  SUBMISSION_NOT_FOUND: 'Submission not found',
+  UNAUTHORIZED_UPDATE_SUBMISSION: 'Unauthorized to update submission status',
+  SUBMISSION_APPROVED_BUG_CLOSED: 'Submission approved and bug closed successfully',
 };
 
 module.exports = { MESSAGES };

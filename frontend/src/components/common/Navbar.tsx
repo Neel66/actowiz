@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
     <AppBar position="static" sx={{ bgcolor: 'primary.main', elevation: 4 }}>
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Bug Creator Dashboard
+          Bug Dashboard
         </Typography>
         <Button
           variant="contained"

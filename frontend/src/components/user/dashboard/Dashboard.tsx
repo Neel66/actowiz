@@ -1,28 +1,37 @@
-import React from 'react';
-import { Typography, Box, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, Card, CardContent } from '@mui/material';
+import Navbar from '../../common/Navbar';
+import BugList from '../bug-list';
+import { getUserBalance } from '../../../services/userService';
 
 const UserDashboard: React.FC = () => {
-  const navigate = useNavigate();
+  const [balance, setBalance] = useState<string>('');
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/');
-  };
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        const data = await getUserBalance();
+        setBalance(data.balance);
+      } catch (error) {
+        console.error('Failed to fetch balance:', error);
+      }
+    };
+    fetchBalance();
+  }, []);
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h4">
-          User Dashboard
-        </Typography>
-        <Button variant="contained" color="error" onClick={handleLogout}>
-          Logout
-        </Button>
+    <Box>
+      <Navbar />
+      <Box sx={{ p: 3 }}>
+        <Card sx={{ mb: 3 }}>
+          <CardContent>
+            <Typography variant="h6" component="div">
+              Total Reward: {balance || 0}
+            </Typography>
+          </CardContent>
+        </Card>
+        <BugList />
       </Box>
-      <Typography variant="body1">
-        Welcome to the User Dashboard. Here you can manage your account and view your activities.
-      </Typography>
     </Box>
   );
 };

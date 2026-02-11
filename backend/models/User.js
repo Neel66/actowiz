@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
     enum: [ROLES.USER, ROLES.BUG_CREATOR],
     default: ROLES.USER,
   },
+  balance: {
+    type: Number,
+    default: 0,
+    min: 0,
+  },
 }, {
   timestamps: true,
 });

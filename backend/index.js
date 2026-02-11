@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -7,7 +8,6 @@ const { PORT } = require('./config/keys');
 
 const app = express();
 
-// Connect to MongoDB
 connectDB();
 
 app.use(helmet());
@@ -16,10 +16,9 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// routes call
 app.use('/api', require('./routes'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

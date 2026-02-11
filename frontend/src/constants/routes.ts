@@ -9,3 +9,9 @@ export const BUG_ROUTES = {
   CREATE: '/bugs',
   GET_ALL: '/bugs',
 };
+
+export const USER_ROUTES = {
+  GET_BUGS: '/users/bugs',
+  SUBMIT_BUG_FIX: '/users/submit-bug-fix',
+  GET_BALANCE: '/users/balance',
+};

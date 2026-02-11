@@ -78,7 +78,6 @@ const validateRegister = (req, res, next) => {
     });
   }
 
-  // Replace req.body with validated and sanitized data
   req.body = value;
   next();
 };
@@ -98,7 +97,6 @@ const validateLogin = (req, res, next) => {
     });
   }
 
-  // Replace req.body with validated and sanitized data
   req.body = value;
   next();
 };

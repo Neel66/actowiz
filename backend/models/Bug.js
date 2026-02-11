@@ -35,4 +35,15 @@ const bugSchema = new mongoose.Schema({
   timestamps: true,
 });
 
+bugSchema.virtual('submissions', {
+  ref: 'Submission',
+  localField: '_id',
+  foreignField: 'bugId',
+  options: { sort: { createdAt: -1 } }
+});
+
+bugSchema.set('toJSON', { virtuals: true });
+bugSchema.set('toObject', { virtuals: true });
+bugSchema.set('strictPopulate', false);
+
 module.exports = mongoose.model('Bug', bugSchema);

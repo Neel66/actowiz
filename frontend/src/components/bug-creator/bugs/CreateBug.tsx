@@ -4,10 +4,6 @@ import {
   Button,
   Box,
   Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Checkbox,
   FormControlLabel,
   CircularProgress,
@@ -19,7 +15,6 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { validateBugTitle, validateBugDescription, validateBountyAmount } from '../../../utils/validation';
 import { BUG_MESSAGES } from '../../../constants/messages';
-import { BUG_STATUSES } from '../../../constants/status';
 import CustomSnackbar from '../../common/Snackbar';
 import { createBug } from '../../../services/bugService';
 
@@ -35,13 +30,11 @@ const CreateBug: React.FC<CreateBugProps> = ({ open, onClose }) => {
     description: '',
     bountyAmount: '',
     isConfigurable: false,
-    status: 'Open',
   });
   const [errors, setErrors] = useState({
     title: '',
     description: '',
     bountyAmount: '',
-    status: '',
   });
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as 'success' | 'error' });
   const [loading, setLoading] = useState(false);
@@ -49,7 +42,7 @@ const CreateBug: React.FC<CreateBugProps> = ({ open, onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     let valid = true;
-    const newErrors = { title: '', description: '', bountyAmount: '', status: '' };
+    const newErrors = { title: '', description: '', bountyAmount: '' };
 
     if (!validateBugTitle(formData.title)) {
       newErrors.title = BUG_MESSAGES.title;
@@ -61,10 +54,6 @@ const CreateBug: React.FC<CreateBugProps> = ({ open, onClose }) => {
     }
     if (!validateBountyAmount(parseInt(formData.bountyAmount))) {
       newErrors.bountyAmount = BUG_MESSAGES.bountyAmount;
-      valid = false;
-    }
-    if (!formData.status) {
-      newErrors.status = BUG_MESSAGES.status;
       valid = false;
     }
 
@@ -156,23 +145,6 @@ const CreateBug: React.FC<CreateBugProps> = ({ open, onClose }) => {
             label="Configurable Bounty"
             sx={{ mb: 2 }}
           />
-          <FormControl fullWidth margin="normal" error={!!errors.status}>
-            <InputLabel id="status-label">Status</InputLabel>
-            <Select
-              labelId="status-label"
-              id="status"
-              value={formData.status}
-              label="Status"
-              onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value }))}
-            >
-              {BUG_STATUSES.map((status) => (
-                <MenuItem key={status} value={status}>
-                  {status}
-                </MenuItem>
-              ))}
-            </Select>
-            {errors.status && <Typography variant="caption" color="error">{errors.status}</Typography>}
-          </FormControl>
           <Button
             type="submit"
             fullWidth
