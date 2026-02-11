@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField, Button, Box, Typography, Grid, Paper, Avatar } from '@mui/material';
+import { TextField, Button, Box, Typography, Grid, Paper, Avatar, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
@@ -15,6 +15,7 @@ const Login: React.FC = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({ email: '', password: '' });
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as 'success' | 'error' });
+  const [loading, setLoading] = useState(false);
 
   // submit the login form
   const handleSubmit = async (e: React.FormEvent) => {
@@ -31,15 +32,22 @@ const Login: React.FC = () => {
     }
     setErrors(newErrors);
     if (valid) {
+      setLoading(true);
       try {
-        await loginUser({
+        const response = await loginUser({
           email: formData.email,
           password: formData.password,
         });
+        localStorage.setItem('token', response.token);
         setSnackbar({ open: true, message: AUTH_MESSAGES.login, severity: 'success' });
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 1500);
       } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : 'Login failed';
         setSnackbar({ open: true, message: errorMessage, severity: 'error' });
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -113,6 +121,7 @@ const Login: React.FC = () => {
               type="submit"
               fullWidth
               variant="contained"
+              disabled={loading}
               sx={{
                 mt: 3,
                 mb: 2,
@@ -126,7 +135,14 @@ const Login: React.FC = () => {
                 },
               }}
             >
-              Sign In
+              {loading ? (
+                <>
+                  <CircularProgress size={20} sx={{ mr: 1, color: 'white' }} />
+                  Signing In...
+                </>
+              ) : (
+                'Sign In'
+              )}
             </Button>
             <Grid container justifyContent="center">
               <Grid>

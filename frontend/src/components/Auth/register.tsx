@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField, Button, Box, Typography, Grid, Paper, Avatar, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { TextField, Button, Box, Typography, Grid, Paper, Avatar, FormControl, InputLabel, Select, MenuItem, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon from '@mui/icons-material/Person';
@@ -17,6 +17,7 @@ const Register: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '', role: '' });
   const [errors, setErrors] = useState({ name: '', email: '', password: '', confirmPassword: '', role: '' });
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as 'success' | 'error' });
+  const [loading, setLoading] = useState(false);
 
   // submit the register form
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,6 +46,7 @@ const Register: React.FC = () => {
     }
     setErrors(newErrors);
     if (valid) {
+      setLoading(true);
       try {
         await registerUser({
           name: formData.name,
@@ -57,6 +59,8 @@ const Register: React.FC = () => {
       } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : 'Registration failed';
         setSnackbar({ open: true, message: errorMessage, severity: 'error' });
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -178,6 +182,7 @@ const Register: React.FC = () => {
               type="submit"
               fullWidth
               variant="contained"
+              disabled={loading}
               sx={{
                 mt: 3,
                 mb: 2,
@@ -191,7 +196,14 @@ const Register: React.FC = () => {
                 },
               }}
             >
-              Sign Up
+              {loading ? (
+                <>
+                  <CircularProgress size={20} sx={{ mr: 1, color: 'white' }} />
+                  Signing Up...
+                </>
+              ) : (
+                'Sign Up'
+              )}
             </Button>
             <Grid container justifyContent="center">
               <Grid>
