@@ -60,3 +60,8 @@ JWT_SECRET=your_jwt_secret_key_here
    ```
 
 3. Open your browser and navigate to `http://localhost:5173`
+
+## NOTE
+- Postman collection for API testing is available in the `postman_collection.json` file in the root directory. Import it into Postman to test the API endpoints.
+
+- Database schema file added in the backend directory for reference.
