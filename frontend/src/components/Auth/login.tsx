@@ -4,42 +4,43 @@ import { TextField, Button, Box, Typography, Grid, Paper, Avatar } from '@mui/ma
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
+import { validateEmail, validatePassword } from '../../utils/validation';
+import { AUTH_MESSAGES } from '../../constants/messages';
+import CustomSnackbar from '../common/Snackbar';
+import { loginUser } from '../../services/authService';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
 
-  const validateEmail = (email: string) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email) && email.length <= 254;
-  };
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [errors, setErrors] = useState({ email: '', password: '' });
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as 'success' | 'error' });
 
-  const validatePassword = (password: string) => {
-    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return re.test(password);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  // submit the login form
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     let valid = true;
-    if (!validateEmail(email)) {
-      setEmailError('Invalid email');
+    const newErrors = { email: '', password: '' };
+    if (!validateEmail(formData.email)) {
+      newErrors.email = AUTH_MESSAGES.email;
       valid = false;
-    } else {
-      setEmailError('');
     }
-    if (!validatePassword(password)) {
-      setPasswordError('Password must be at least 8 characters, include uppercase, lowercase, number, and special character');
+    if (!validatePassword(formData.password)) {
+      newErrors.password = AUTH_MESSAGES.password;
       valid = false;
-    } else {
-      setPasswordError('');
     }
+    setErrors(newErrors);
     if (valid) {
-      // login logic
-      alert('Login successful');
+      try {
+        await loginUser({
+          email: formData.email,
+          password: formData.password,
+        });
+        setSnackbar({ open: true, message: AUTH_MESSAGES.login, severity: 'success' });
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Login failed';
+        setSnackbar({ open: true, message: errorMessage, severity: 'error' });
+      }
     }
   };
 
@@ -82,10 +83,10 @@ const Login: React.FC = () => {
               name="email"
               autoComplete="email"
               autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={!!emailError}
-              helperText={emailError}
+              value={formData.email}
+              onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+              error={!!errors.email}
+              helperText={errors.email}
               InputProps={{
                 startAdornment: <EmailIcon sx={{ mr: 1, color: 'action.active' }} />,
               }}
@@ -99,10 +100,10 @@ const Login: React.FC = () => {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              error={!!passwordError}
-              helperText={passwordError}
+              value={formData.password}
+              onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
+              error={!!errors.password}
+              helperText={errors.password}
               InputProps={{
                 startAdornment: <LockIcon sx={{ mr: 1, color: 'action.active' }} />,
               }}
@@ -149,6 +150,12 @@ const Login: React.FC = () => {
             </Grid>
           </Box>
         </Paper>
+        <CustomSnackbar
+          open={snackbar.open}
+          message={snackbar.message}
+          severity={snackbar.severity}
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+        />
     </Box>
   );
 };

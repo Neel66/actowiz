@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField, Button, Box, Typography, Grid, Paper, Avatar, FormControl, InputLabel, Select, MenuItem, Snackbar, Alert } from '@mui/material';
+import { TextField, Button, Box, Typography, Grid, Paper, Avatar, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import { validateEmail, validatePassword, validateName } from '../../utils/validation';
 import { ROLES } from '../../constants/roles';
-import { VALIDATION_MESSAGES } from '../../constants/messages';
+import { AUTH_MESSAGES } from '../../constants/messages';
+import CustomSnackbar from '../common/Snackbar';
+import {registerUser} from '../../services/authService';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -17,33 +19,45 @@ const Register: React.FC = () => {
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as 'success' | 'error' });
 
   // submit the register form
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     let valid = true;
     const newErrors = { name: '', email: '', password: '', confirmPassword: '', role: '' };
     if (!validateName(formData.name)) {
-      newErrors.name = VALIDATION_MESSAGES.name;
+      newErrors.name = AUTH_MESSAGES.name;
       valid = false;
     }
     if (!validateEmail(formData.email)) {
-      newErrors.email = VALIDATION_MESSAGES.email;
+      newErrors.email = AUTH_MESSAGES.email;
       valid = false;
     }
     if (!validatePassword(formData.password)) {
-      newErrors.password = VALIDATION_MESSAGES.password;
+      newErrors.password = AUTH_MESSAGES.password;
       valid = false;
     }
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = VALIDATION_MESSAGES.confirmPassword;
+      newErrors.confirmPassword = AUTH_MESSAGES.confirmPassword;
       valid = false;
     }
     if (!formData.role) {
-      newErrors.role = VALIDATION_MESSAGES.role;
+      newErrors.role = AUTH_MESSAGES.role;
       valid = false;
     }
     setErrors(newErrors);
     if (valid) {
-      setSnackbar({ open: true, message: 'Registration successful!', severity: 'success' });
+      try {
+        await registerUser({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+        });
+        setSnackbar({ open: true, message: AUTH_MESSAGES.register, severity: 'success' });
+        navigate('/sign-in');
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Registration failed';
+        setSnackbar({ open: true, message: errorMessage, severity: 'error' });
+      }
     }
   };
 
@@ -201,16 +215,12 @@ const Register: React.FC = () => {
             </Grid>
           </Box>
         </Paper>
-        <Snackbar
+        <CustomSnackbar
           open={snackbar.open}
-          autoHideDuration={6000}
+          message={snackbar.message}
+          severity={snackbar.severity}
           onClose={() => setSnackbar({ ...snackbar, open: false })}
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        >
-          <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity} sx={{ width: '100%' }}>
-            {snackbar.message}
-          </Alert>
-        </Snackbar>
+        />
     </Box>
   );
 };
