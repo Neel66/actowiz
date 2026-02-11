@@ -4,3 +4,8 @@ export const AUTH_ROUTES = {
   REGISTER: '/auth/register',
   LOGIN: '/auth/login',
 };
+
+export const BUG_ROUTES = {
+  CREATE: '/bugs',
+  GET_ALL: '/bugs',
+};

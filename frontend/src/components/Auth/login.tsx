@@ -8,6 +8,7 @@ import { validateEmail, validatePassword } from '../../utils/validation';
 import { AUTH_MESSAGES } from '../../constants/messages';
 import CustomSnackbar from '../common/Snackbar';
 import { loginUser } from '../../services/authService';
+import { getRoleFromToken } from '../../utils/jwt';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -41,12 +42,19 @@ const Login: React.FC = () => {
         localStorage.setItem('token', response.token);
         setSnackbar({ open: true, message: AUTH_MESSAGES.login, severity: 'success' });
         setTimeout(() => {
-          navigate('/dashboard');
+          const role = getRoleFromToken(response.token);
+          if (role === 'user') {
+            navigate('/user-dashboard');
+          } else if (role === 'bug-creator') {
+            navigate('/dashboard');
+          } else {
+            navigate('/');
+          }
+          setLoading(false);
         }, 1500);
       } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : 'Login failed';
         setSnackbar({ open: true, message: errorMessage, severity: 'error' });
-      } finally {
         setLoading(false);
       }
     }
